@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - IN ROTA</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="/src/style/usuario/acesso_geral.css" />
+  </head>
+
+  <body>
+    <div class="loading" id="loading">
+      <div class="spinner"></div>
+      <p>Processando...</p>
+    </div>
+
+    <div class="container">
+      <!-- LADO ESQUERDO -->
+      <div class="left">
+        <div class="left-content">
+          <div class="logo-mobile">
+            <h2>IN ROTA</h2>
+          </div>
+
+          <h1>LOGIN</h1>
+
+          <div class="tabs">
+            <div class="tab active" id="userTab">Usuário</div>
+            <div class="tab" id="partnerTab">Parceiro</div>
+          </div>
+
+          <div class="form-container">
+            <form id="loginForm">
+              <div class="input-group hidden" id="cnpjGroup">
+                <input type="text" id="cnpj" placeholder="CNPJ" />
+                <i class="input-icon fas fa-building"></i>
+              </div>
+
+              <div class="input-group">
+                <input type="email" id="email" placeholder="E-mail" required />
+                <i class="input-icon fas fa-envelope"></i>
+              </div>
+
+              <div class="input-group">
+                <input
+                  type="password"
+                  id="password"
+                  placeholder="Senha"
+                  required
+                />
+                <i
+                  class="input-icon password-toggle fas fa-eye"
+                  id="togglePassword"
+                ></i>
+              </div>
+
+              <button type="submit" class="btn-login">Fazer login</button>
+            </form>
+
+            <div class="forgot" id="forgotPassword">Esqueceu sua senha?</div>
+
+            <!-- Link para cadastro de usuário (só aparece no modo usuário) -->
+            <div class="user-register-link" id="userRegister">
+              Não possui conta? Cadastre-se agora
+            </div>
+
+            <!-- Link para cadastro de parceiro (só aparece no modo parceiro) -->
+            <div class="register-link" id="registerPartner">
+              Não possui cadastro de parceiro? Crie um agora
+            </div>
+
+            <div class="separator">
+              <span>Ou entre com</span>
+            </div>
+
+            <div class="social">
+              <div class="social-btn google">
+                <i class="fab fa-google"></i>
+              </div>
+              <div class="social-btn facebook">
+                <i class="fab fa-facebook-f"></i>
+              </div>
+              <div class="social-btn apple">
+                <i class="fab fa-apple"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LADO DIREITO -->
+      <div class="right">
+        <div class="right-content">
+          <img src="/images/logo.png" alt="IN ROTA" class="logo-image" />
+          <p>
+            Conectamos pessoas e destinos com inovação, segurança e qualidade.
+            Sua jornada começa aqui.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Elementos DOM
+      const userTab = document.getElementById("userTab");
+      const partnerTab = document.getElementById("partnerTab");
+      const loginForm = document.getElementById("loginForm");
+      const togglePassword = document.getElementById("togglePassword");
+      const passwordInput = document.getElementById("password");
+      const forgotPassword = document.getElementById("forgotPassword");
+      const userRegister = document.getElementById("userRegister");
+      const registerPartner = document.getElementById("registerPartner");
+      const loading = document.getElementById("loading");
+      const cnpjGroup = document.getElementById("cnpjGroup");
+      const cnpjInput = document.getElementById("cnpj");
+      const emailInput = document.getElementById("email");
+
+      // Alternar entre usuário e parceiro
+      userTab.addEventListener("click", () => {
+        userTab.classList.add("active");
+        partnerTab.classList.remove("active");
+        cnpjGroup.classList.add("hidden");
+        registerPartner.classList.remove("show");
+        userRegister.classList.remove("hidden");
+        cnpjInput.removeAttribute("required");
+        emailInput.setAttribute("placeholder", "E-mail");
+      });
+
+      partnerTab.addEventListener("click", () => {
+        partnerTab.classList.add("active");
+        userTab.classList.remove("active");
+        cnpjGroup.classList.remove("hidden");
+        registerPartner.classList.add("show");
+        userRegister.classList.add("hidden");
+        cnpjInput.setAttribute("required", "true");
+        emailInput.setAttribute("placeholder", "E-mail corporativo");
+      });
+
+      // Mostrar/ocultar senha
+      togglePassword.addEventListener("click", () => {
+        const type =
+          passwordInput.getAttribute("type") === "password"
+            ? "text"
+            : "password";
+        passwordInput.setAttribute("type", type);
+        togglePassword.classList.toggle("fa-eye");
+        togglePassword.classList.toggle("fa-eye-slash");
+      });
+
+      // Processar formulário de login
+      loginForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        loading.style.display = "flex";
+
+        setTimeout(() => {
+          loading.style.display = "none";
+
+          const email = emailInput.value;
+          const password = passwordInput.value;
+          const isPartner = partnerTab.classList.contains("active");
+
+          if (isPartner) {
+            const cnpj = cnpjInput.value;
+            if (cnpj && email && password) {
+              alert(`Login de parceiro realizado com sucesso!`);
+            } else {
+              alert("Por favor, preencha todos os campos.");
+            }
+          } else {
+            if (email && password) {
+              alert(`Login de usuário realizado com sucesso!`);
+            } else {
+              alert("Por favor, preencha todos os campos.");
+            }
+          }
+        }, 1500);
+      });
+
+      // Esqueci minha senha
+      forgotPassword.addEventListener("click", () => {
+        const isPartner = partnerTab.classList.contains("active");
+        const message = isPartner
+          ? "Digite seu CNPJ e e-mail para redefinir a senha:"
+          : "Digite seu e-mail para redefinir a senha:";
+
+        const email = prompt(message);
+        if (email) {
+          loading.style.display = "flex";
+          setTimeout(() => {
+            loading.style.display = "none";
+            alert(`Instruções enviadas para: ${email}`);
+          }, 1000);
+        }
+      });
+
+      // Cadastro de usuário
+      userRegister.addEventListener("click", () => {
+        showUserRegistration();
+      });
+
+      // Cadastro de parceiro
+      registerPartner.addEventListener("click", () => {
+        showPartnerRegistration();
+      });
+
+      // Função para mostrar o formulário de cadastro de usuário
+      function showUserRegistration() {
+        const registrationHTML = `
+                <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: flex; justify-content: center; align-items: center; z-index: 10000;">
+                    <div style="background: white; padding: 30px; border-radius: 15px; max-width: 400px; width: 90%;">
+                        <h2 style="color: var(--primary-green); text-align: center; margin-bottom: 25px; font-size: 20px;">CADASTRAR USUÁRIO</h2>
+                        
+                        <form id="userForm" style="display: flex; flex-direction: column; gap: 15px;">
+                            <div>
+                                <input type="text" placeholder="Nome completo" style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 14px;" required>
+                            </div>
+                            
+                            <div>
+                                <input type="email" placeholder="E-mail" style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 14px;" required>
+                            </div>
+                            
+                            <div style="position: relative;">
+                                <input type="password" placeholder="Senha" style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 14px;" required>
+                                <i class="password-toggle fas fa-eye" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: #888; cursor: pointer;"></i>
+                            </div>
+                            
+                            <button type="submit" style="background: var(--accent-blue); color: white; border: none; padding: 14px; border-radius: 8px; font-weight: 600; cursor: pointer; margin-top: 10px; font-size: 14px;">Cadastrar</button>
+                            
+                            <button type="button" onclick="closeRegistration()" style="background: #ccc; color: #333; border: none; padding: 12px; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 14px;">Cancelar</button>
+                        </form>
+                    </div>
+                </div>
+            `;
+
+        document.body.insertAdjacentHTML("beforeend", registrationHTML);
+
+        // Adicionar funcionalidade de mostrar/ocultar senha no modal
+        const modalToggle = document.querySelector(
+          "#userForm .password-toggle"
+        );
+        const modalPassword = document.querySelector(
+          '#userForm input[type="password"]'
+        );
+
+        modalToggle.addEventListener("click", () => {
+          const type =
+            modalPassword.getAttribute("type") === "password"
+              ? "text"
+              : "password";
+          modalPassword.setAttribute("type", type);
+          modalToggle.classList.toggle("fa-eye");
+          modalToggle.classList.toggle("fa-eye-slash");
+        });
+
+        document
+          .getElementById("userForm")
+          .addEventListener("submit", function (e) {
+            e.preventDefault();
+            alert(
+              "Cadastro de usuário realizado com sucesso! Faça login para continuar."
+            );
+            closeRegistration();
+          });
+      }
+
+      // Função para mostrar o formulário de cadastro de estabelecimento
+      function showPartnerRegistration() {
+        const registrationHTML = `
+                <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: flex; justify-content: center; align-items: center; z-index: 10000;">
+                    <div style="background: white; padding: 30px; border-radius: 15px; max-width: 450px; width: 90%; max-height: 85vh; overflow-y: auto;">
+                        <h2 style="color: var(--primary-green); text-align: center; margin-bottom: 25px; font-size: 20px;">CADASTRAR ESTABELECIMENTO</h2>
+                        
+                        <form id="partnerForm" style="display: flex; flex-direction: column; gap: 15px;">
+                            <div>
+                                <input type="text" placeholder="Nome / Razão Social" style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 14px;" required>
+                            </div>
+                            
+                            <div>
+                                <input type="text" placeholder="CNPJ" style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 14px;" required>
+                            </div>
+                            
+                            <div>
+                                <input type="text" placeholder="Endereço" style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 14px;" required>
+                            </div>
+                            
+                            <div>
+                                <input type="tel" placeholder="Telefone" style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 14px;" required>
+                            </div>
+                            
+                            <div>
+                                <input type="text" placeholder="Rede Social" style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 14px;">
+                            </div>
+                            
+                            <div>
+                                <select style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 14px; background: white;" required>
+                                    <option value="">Selecione a Categoria</option>
+                                    <option value="restaurante">Restaurante</option>
+                                    <option value="hotel">Hotel</option>
+                                    <option value="atracao">Atração Turística</option>
+                                    <option value="loja">Loja</option>
+                                    <option value="outro">Outro</option>
+                                </select>
+                            </div>
+                            
+                            <button type="submit" style="background: var(--accent-blue); color: white; border: none; padding: 14px; border-radius: 8px; font-weight: 600; cursor: pointer; margin-top: 10px; font-size: 14px;">Cadastrar</button>
+                            
+                            <button type="button" onclick="closeRegistration()" style="background: #ccc; color: #333; border: none; padding: 12px; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 14px;">Cancelar</button>
+                        </form>
+                    </div>
+                </div>
+            `;
+
+        document.body.insertAdjacentHTML("beforeend", registrationHTML);
+
+        document
+          .getElementById("partnerForm")
+          .addEventListener("submit", function (e) {
+            e.preventDefault();
+            alert(
+              "Estabelecimento cadastrado com sucesso! Em breve entraremos em contato."
+            );
+            closeRegistration();
+          });
+      }
+
+      function closeRegistration() {
+        const modal = document.querySelector(
+          'div[style*="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8)"]'
+        );
+        if (modal) {
+          modal.remove();
+        }
+      }
+
+      // Animações de entrada
+      document.addEventListener("DOMContentLoaded", () => {
+        const elements = document.querySelectorAll(
+          ".left-content > *, .right-content > *"
+        );
+        elements.forEach((el, index) => {
+          el.style.opacity = "0";
+          el.style.transform = "translateY(20px)";
+
+          setTimeout(() => {
+            el.style.transition = "opacity 0.5s ease, transform 0.5s ease";
+            el.style.opacity = "1";
+            el.style.transform = "translateY(0)";
+          }, 100 * index);
+        });
+      });
+    </script>
+  </body>
+</html>

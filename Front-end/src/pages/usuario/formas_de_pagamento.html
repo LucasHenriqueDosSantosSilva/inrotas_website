@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página de Pagamento</title>
+    <link rel="stylesheet" href="/src/style/usuario/formas_de_pagamento.css">
+
+    <!-- Ícones (Font Awesome) -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <script>
+        const buttons = document.querySelectorAll(".tab-btn");
+        const contents = document.querySelectorAll(".tab-content");
+
+        buttons.forEach(btn => {
+        btn.addEventListener("click", () => {
+        // Remove ativo de todas as abas e conteúdos
+            buttons.forEach(b => b.classList.remove("active"));
+            contents.forEach(c => c.classList.remove("active"));
+
+        // Ativa a aba clicada
+            btn.classList.add("active");
+            document.getElementById(btn.dataset.target).classList.add("active");
+        });
+    });
+    </script>
+</head>
+
+<body>
+
+    <!-- MENU SUPERIOR -->
+    <header class="header">
+        <img src="/images/logo.png" class="logo" alt="Logo InRota">
+
+        <div class="user-menu">
+            <img src="/images/fotoUsuario.png" class="user-img" alt="Foto do usuário">
+            <div class="menu-icon">&#9776;</div>
+        </div>
+    </header>
+
+    <!-- ABAS -->
+    <div class="tabs tabs-group">
+        <button class="tab-btn active" data-target="cartao">
+            <span class="tab-icon"><i class="fa-solid fa-credit-card"></i></span>
+            <span class="tab-label">Crédito / Débito</span>
+        </button>
+
+        <button class="tab-btn" data-target="pix">
+            <span class="tab-icon"><i class="fa-brands fa-pix"></i></span>
+            <span class="tab-label">Pix</span>
+        </button>
+
+        <button class="tab-btn" data-target="boleto">
+            <span class="tab-icon"><i class="fa-solid fa-barcode"></i></span>
+            <span class="tab-label">Boleto bancário</span>
+        </button>
+    </div>
+
+    <!-- CONTEÚDO DAS PÁGINAS -->
+
+    <!-- ➤ TELA 1 — CARTÃO -->
+    <section id="cartao" class="tab-content active">
+        <div class="card">
+            <div class="left">
+                <h2 style="color: darkgreen;">Informações do Cartão</h2>
+
+                <label></label>
+                <input type="text" placeholder="Nome do Cartão">
+
+                <label></label>
+                <input type="text" placeholder="Data de Validade (MM/AA)">
+
+                <label></label>
+                <input type="text" placeholder="CVV">
+
+                <label></label>
+                <input type="text" placeholder="Número do Cartão">
+
+                <h2 style="color: darkgreen;">Endereço de Cobrança</h2>
+
+                <label></label>
+                <input type="text" placeholder="CEP">
+
+                <div class="row">
+                    <div>
+                        <label></label>
+                        <input type="text" placeholder="Estado">
+                    </div>
+                    <div>
+                        <label></label>
+                        <input type="text" placeholder="Cidade">
+                    </div>
+                </div>
+
+                <label></label>
+                <input type="text" placeholder="Rua/Avenida">
+
+                <div class="row">
+                    <div>
+                        <label></label>
+                        <input type="text" placeholder="Número">
+                    </div>
+                    <div>
+                        <label></label>
+                        <input type="text" placeholder="Complemento">
+                    </div>
+                </div>
+            </div>
+
+<div class="right resumo-compra">
+    <h2 class="resumo-titulo">Compra:</h2>
+
+    <div class="resumo-topo">
+        <div class="resumo-plano">
+            <p class="resumo-plano-nome">Plano In Rota Anual</p>
+            <p class="resumo-proxima">Próxima parcela: 27/01/2026</p>
+        </div>
+        <div class="resumo-valor">
+            <span class="resumo-valor-numero">R$24,99</span>
+        </div>
+    </div>
+
+    <div class="resumo-total-box">
+        <span class="resumo-total-label">Total:</span>
+        <span class="resumo-total-valor">R$24,99</span>
+    </div>
+
+    <button class="pay-btn resumo-pay-btn">Realizar Pagamento</button>
+</div>
+    </section>
+
+    <!-- ➤ TELA 2 — PIX -->
+<section id="pix" class="tab-content">
+    <div class="card pix-card">
+
+        <div class="pix-info">
+            <div class="pix-box valor-box">
+                <h3>Sua Compra:</h3>
+                <h1>R$24,99</h1>
+            </div>
+
+            <div class="pix-box logo-box">
+                <img src="/images/logoPix.png" class="pix-icon" alt="Pix">
+            </div>
+        </div>
+
+        <div class="pix-qr">
+            <h3>QR Code:</h3>
+            <img src="/images/QrCode.png" class="qr-img" alt="QR Code do Pix">
+            <button class="copy-btn">Copiar código</button>
+        </div>
+
+        <div class="pix-key">
+            <h3>Chave:</h3>
+            <p><u><strong>pix.inrota@usainfo.com.br</strong></u></p>
+            <button class="copy-btn">Copiar chave</button>
+        </div>
+
+    </div>
+</section>
+
+    <!-- ➤ TELA 3 — BOLETO -->
+    <section id="boleto" class="tab-content">
+        <div class="card boleto-card">
+            <label>Código de Barras:</label>
+            <input type="text" value="98765432101234567890JNXUI39J12NJWO30">
+
+            <img src="/images/codigoBarras.png" class="barcode-img" alt="Código de barras do boleto">
+
+            <button class="pdf-btn">Baixar PDF do Boleto</button>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>

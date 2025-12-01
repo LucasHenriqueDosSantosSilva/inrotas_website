@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>IN ROTA</title>
+    <link rel="stylesheet" href="/src/style/usuario/preferencias.css" />
+  </head>
+  <body>
+    <div class="topo">
+      <img
+        src="DESIGN P.I (1).png"
+        width="20%"
+        height="10%"
+        class="logo"
+        alt="Logo"
+      />
+      <div class="perfil">
+        <img src="perfil.png" alt="Perfil" />
+        <div class="menu">
+          <div class="linha"></div>
+          <div class="linha"></div>
+          <div class="linha"></div>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="title">
+        <h4>Selecione seus interesses para personalizar suas recomendações:</h4>
+      </div>
+      <div class="interesses">
+        <div class="interesse" onclick="selecionarInteresse(this)">
+          <div class="icon">🏖️</div>
+          <div class="text">Lazer</div>
+        </div>
+        <div class="interesse" onclick="selecionarInteresse(this)">
+          <div class="icon">📚</div>
+          <div class="text">Cultural</div>
+        </div>
+        <div class="interesse" onclick="selecionarInteresse(this)">
+          <div class="icon">💻</div>
+          <div class="text">Tecnologia</div>
+        </div>
+        <div class="interesse" onclick="selecionarInteresse(this)">
+          <div class="icon">🎵</div>
+          <div class="text">Música</div>
+        </div>
+        <div class="interesse" onclick="selecionarInteresse(this)">
+          <div class="icon">🎉</div>
+          <div class="text">Eventos</div>
+        </div>
+        <div class="interesse" onclick="selecionarInteresse(this)">
+          <div class="icon">🍴</div>
+          <div class="text">Gastronomia</div>
+        </div>
+        <div class="interesse" onclick="selecionarInteresse(this)">
+          <div class="icon">✈️</div>
+          <div class="text">Viagens</div>
+        </div>
+        <div class="interesse" onclick="selecionarInteresse(this)">
+          <div class="icon">🎨</div>
+          <div class="text">Arte</div>
+        </div>
+      </div>
+      <button class="botao-salvar" onclick="salvarPreferencias()">
+        Salvar Preferências
+      </button>
+    </div>
+
+    <script>
+      function selecionarInteresse(interesse) {
+        interesse.classList.toggle("selecionado");
+      }
+
+      function salvarPreferencias() {
+        const interessesSelecionados = document.querySelectorAll(
+          ".interesse.selecionado"
+        );
+        const preferencias = Array.from(interessesSelecionados).map(
+          (interesse) => interesse.querySelector(".text").textContent
+        );
+        console.log(preferencias);
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,115 @@
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  background: #075e02; /* verde idêntico ao print */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Familjen Grotesk", sans-serif;
+}
+
+/* CARD CENTRO */
+.card {
+  width: 380px;
+  height: auto;
+  background: #ffffff;
+  padding: 55px 70px;
+  border-radius: 18px;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+}
+
+/* SETA */
+.arrow {
+  position: absolute;
+  left: 35px;
+  top: 35px;
+  font-size: 20px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-weight: 200;
+}
+
+/* LOGO */
+.logo {
+  width: 120px;
+  margin-top: -40px;
+  margin-bottom: 40px;
+}
+
+/* TÍTULO */
+.title {
+  font-size: 20px;
+  font-weight: 700;
+  margin-top: -50px;
+  margin-bottom: 8px;
+}
+
+/* SUBTÍTULO */
+.subtitle {
+  font-family: "familjen Grotesk", sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #333;
+  text-align: left;
+  padding-left: 70px;
+  margin-top: -20;
+  margin-bottom: 32px;
+  line-height: 20px;
+}
+
+/* LABEL */
+.label {
+  font-size: 14px;
+  display: block;
+  text-align: left;
+  margin-bottom: 10px;
+}
+
+/* INPUT */
+
+.box {
+  display: flex;
+  justify-content: center;
+  justify-content: space-around
+}
+
+.input {
+  
+  display: flex;
+  justify-content: center;
+  align-content: space-between;
+  width: 50px;
+  height: 50px;
+  padding: 1px;
+  border-radius: 10%;
+  border: none;
+  border-bottom: 0.5px solid #fff;
+  background: #f2f2f2;
+  font-size: 15px;
+  margin-bottom: 70px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+}
+
+/* BOTÃO */
+.btn {
+  width: 50%;
+  padding: 5px 0;
+  display: block;
+  margin: 0 auto;
+  background: #346ed8; /* azul idêntico */
+  border: none;
+  border-radius: 10px;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 68, 255, 0.25);
+}
+
+.btn:hover {
+  opacity: 0.9;
+}

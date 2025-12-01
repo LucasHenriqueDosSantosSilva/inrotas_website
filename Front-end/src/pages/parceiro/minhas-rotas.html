@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Minhas Rotas - Dashboard Parceiro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <style>
+        /* Reset e Base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Inter", sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            /* Fundo claro */
+            color: #333;
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button {
+            cursor: pointer;
+            border: none;
+            background: none;
+        }
+
+        /* Dashboard Container */
+        .dashboard-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background-color: #2d6a36;
+            /* Verde */
+            color: #ffffff;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .sidebar.hidden {
+            transform: translateX(-100%);
+            position: absolute;
+            z-index: 1000;
+        }
+
+        .sidebar-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .sidebar-header img {
+            max-width: 150px;
+            height: auto;
+        }
+
+        .sidebar-nav ul {
+            list-style: none;
+        }
+
+        .sidebar-nav li {
+            margin-bottom: 15px;
+        }
+
+        .sidebar-nav a {
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+            color: #ffffff;
+            font-weight: 500;
+        }
+
+        .sidebar-nav a:hover,
+        .sidebar-nav a.active {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .sidebar-nav a img {
+            width: 20px;
+            margin-right: 10px;
+            filter: invert(1);
+            /* Para ícones brancos */
+        }
+
+        /* Main Content */
+        .main-content {
+            flex-grow: 1;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            margin: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Header Top */
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eceeea;
+            /* Cinza claro */
+        }
+
+        .header-top h1 {
+            color: #2d6a36;
+            /* Verde */
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+        }
+
+        .user-menu img {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            margin-left: 15px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .user-menu img:hover {
+            transform: scale(1.1);
+        }
+
+        .hamburger-menu {
+            display: none;
+            /* Escondido por padrão */
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            flex-direction: column;
+            justify-content: space-around;
+            margin-right: 15px;
+        }
+
+        .hamburger-menu span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background-color: #2d6a36;
+            border-radius: 5px;
+        }
+
+        /* Search and Filter Bar */
+        .search-filter-bar {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .search-filter-bar input[type="search"],
+        .search-filter-bar select {
+            padding: 10px 15px;
+            border: 1px solid #eceeea;
+            border-radius: 8px;
+            font-size: 16px;
+            flex: 1;
+            min-width: 180px;
+            transition: border-color 0.3s ease;
+        }
+
+        .search-filter-bar input[type="search"]:focus,
+        .search-filter-bar select:focus {
+            outline: none;
+            border-color: #2d6a36;
+        }
+
+        .search-filter-bar button {
+            background-color: #2d6a36;
+            /* Verde */
+            color: #ffffff;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .search-filter-bar button:hover {
+            background-color: #24522a;
+            /* Verde mais escuro */
+        }
+
+        /* Table Styles */
+        .table-container {
+            overflow-x: auto;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .routes-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 700px;
+            /* Garante que a tabela não fique muito estreita */
+        }
+
+        .routes-table th,
+        .routes-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #eceeea;
+        }
+
+        .routes-table th {
+            background-color: #eceeea;
+            /* Cinza claro */
+            font-weight: 600;
+            color: #555;
+            text-transform: uppercase;
+            font-size: 14px;
+        }
+
+        .routes-table tbody tr:hover {
+            background-color: #f9f9f9;
+        }
+
+        .routes-table .status-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .status-badge.active {
+            background-color: #28a745;
+            /* Verde */
+        }
+
+        .status-badge.paused {
+            background-color: #ffc107;
+            /* Amarelo */
+        }
+
+        .status-badge.draft {
+            background-color: #6c757d;
+            /* Cinza */
+        }
+
+        .status-badge.pending {
+            background-color: #007bff;
+            /* Azul */
+        }
+
+        .routes-table .actions button {
+            background-color: #2d6a36;
+            color: #ffffff;
+            padding: 6px 10px;
+            border-radius: 5px;
+            font-size: 13px;
+            margin-right: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .routes-table .actions button:hover {
+            background-color: #24522a;
+        }
+
+        .routes-table .actions button.delete {
+            background-color: #dc3545;
+            /* Vermelho */
+        }
+
+        .routes-table .actions button.delete:hover {
+            background-color: #c82333;
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            margin-top: 20px;
+            gap: 10px;
+        }
+
+        .pagination button {
+            background-color: #eceeea;
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+        }
+
+        .pagination button:hover:not(:disabled) {
+            background-color: #d4d4d4;
+        }
+
+        .pagination button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .pagination span {
+            font-weight: 600;
+            color: #555;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .dashboard-container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+                padding: 15px 20px;
+                position: fixed;
+                top: 0;
+                left: 0;
+                z-index: 1000;
+                transform: translateX(-100%);
+                box-shadow: none;
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+            }
+
+            .sidebar-header {
+                display: none;
+                /* Oculta logo na sidebar em mobile */
+            }
+
+            .sidebar-nav ul {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 10px;
+            }
+
+            .sidebar-nav li {
+                margin-bottom: 0;
+            }
+
+            .sidebar-nav a {
+                padding: 8px 12px;
+                font-size: 14px;
+            }
+
+            .sidebar-nav a img {
+                display: none;
+                /* Oculta ícones na sidebar em mobile */
+            }
+
+            .main-content {
+                margin: 15px;
+                padding: 15px;
+                margin-top: 80px;
+                /* Espaço para o header fixo */
+            }
+
+            .header-top {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                background-color: #ffffff;
+                padding: 15px 20px;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+                z-index: 100;
+                margin-bottom: 0;
+                border-bottom: none;
+            }
+
+            .header-top h1 {
+                font-size: 22px;
+            }
+
+            .hamburger-menu {
+                display: flex;
+                /* Mostra o hambúrguer */
+            }
+
+            .search-filter-bar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .search-filter-bar input,
+            .search-filter-bar select,
+            .search-filter-bar button {
+                width: 100%;
+                min-width: unset;
+            }
+
+            .routes-table th,
+            .routes-table td {
+                padding: 10px;
+                font-size: 13px;
+            }
+
+            .routes-table .actions button {
+                padding: 4px 8px;
+                font-size: 12px;
+                margin-right: 3px;
+            }
+
+            .pagination {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .sidebar-nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="dashboard-container">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <!-- INSERIR LOGO AQUI -->
+                <!-- Exemplo: <img src="/images/logo.png" alt="Logo da Empresa" /> -->
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li>
+                        <a href="dashboard-parceiros.html">
+                            <img src="https://img.icons8.com/ios-filled/24/ffffff/speedometer.png"
+                                alt="Dashboard Icon" />
+                            Dashboard
+                        </a>
+                    </li>
+                    <li>
+                        <a href="minhas-rotas.html" class="active">
+                            <img src="https://img.icons8.com/ios-filled/24/ffffff/route.png" alt="Rotas Icon" />
+                            Minhas Rotas
+                        </a>
+                    </li>
+                    <li>
+                        <a href="configuracoes-parceiros.html">
+                            <img src="https://img.icons8.com/ios-filled/24/ffffff/settings.png"
+                                alt="Configurações Icon" />
+                            Configurações
+                        </a>
+                    </li>
+                    <li>
+                        <a href="login-parceiros.html">
+                            <img src="https://img.icons8.com/ios-filled/24/ffffff/exit.png" alt="Sair Icon" />
+                            Sair
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <div class="header-top">
+                <div class="hamburger-menu" id="hamburgerMenu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <h1>Minhas Rotas</h1>
+                <div class="user-menu">
+                    <img src="https://img.icons8.com/ios-filled/32/user-male-circle.png" alt="Profile Icon" />
+                    <img src="https://img.icons8.com/ios-filled/32/settings.png" alt="Settings Icon" />
+                </div>
+            </div>
+
+            <div class="search-filter-bar">
+                <input type="search" id="searchRoutes" placeholder="Buscar rotas por nome..." />
+                <select id="filterStatus">
+                    <option value="all">Todos os Status</option>
+                    <option value="active">Ativo</option>
+                    <option value="paused">Pausado</option>
+                    <option value="draft">Rascunho</option>
+                    <option value="pending">Pendente</option>
+                </select>
+                <button onclick="location.href='criar-rota.html'">Nova Rota</button>
+            </div>
+
+            <div class="table-container">
+                <table class="routes-table">
+                    <thead>
+                        <tr>
+                            <th>Nome da Rota</th>
+                            <th>Status</th>
+                            <th>Criada em</th>
+                            <th>Avaliação</th>
+                            <th>Visualizações</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="routesTableBody">
+                        <!-- Dados das rotas serão inseridos aqui pelo JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="pagination">
+                <button id="prevPage" disabled>Anterior</button>
+                <span id="currentPage">1</span> / <span id="totalPages">1</span>
+                <button id="nextPage">Próxima</button>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const sidebar = document.getElementById("sidebar");
+            const hamburgerMenu = document.getElementById("hamburgerMenu");
+            const routesTableBody = document.getElementById("routesTableBody");
+            const searchRoutesInput = document.getElementById("searchRoutes");
+            const filterStatusSelect = document.getElementById("filterStatus");
+            const prevPageBtn = document.getElementById("prevPage");
+            const nextPageBtn = document.getElementById("nextPage");
+            const currentPageSpan = document.getElementById("currentPage");
+            const totalPagesSpan = document.getElementById("totalPages");
+
+            // Sample Data (replace with actual data from backend)
+            let allRoutes = [
+                {
+                    id: 1,
+                    name: "Rota Histórica de Olinda",
+                    status: "active",
+                    created: "2023-01-15",
+                    rating: 4.8,
+                    views: 1250,
+                },
+                {
+                    id: 2,
+                    name: "Trilhas Ecológicas de Fernando de Noronha",
+                    status: "paused",
+                    created: "2023-03-20",
+                    rating: 4.5,
+                    views: 890,
+                },
+                {
+                    id: 3,
+                    name: "Gastronomia Recifense: Sabores Locais",
+                    status: "draft",
+                    created: "2023-05-01",
+                    rating: 0,
+                    views: 50,
+                },
+                {
+                    id: 4,
+                    name: "Passeio de Catamarã pelo Rio Capibaribe",
+                    status: "active",
+                    created: "2023-06-10",
+                    rating: 4.9,
+                    views: 2100,
+                },
+                {
+                    id: 5,
+                    name: "Roteiro Cultural do Bairro do Recife",
+                    status: "pending",
+                    created: "2023-07-01",
+                    rating: 4.2,
+                    views: 320,
+                },
+                {
+                    id: 6,
+                    name: "Praias do Litoral Sul: Calhetas e Muro Alto",
+                    status: "active",
+                    created: "2023-08-05",
+                    rating: 4.7,
+                    views: 1500,
+                },
+                {
+                    id: 7,
+                    name: "Arte Urbana em Boa Vista",
+                    status: "draft",
+                    created: "2023-09-12",
+                    rating: 0,
+                    views: 80,
+                },
+                {
+                    id: 8,
+                    name: "Mercado de São José: Tradição e Artesanato",
+                    status: "active",
+                    created: "2023-10-01",
+                    rating: 4.6,
+                    views: 980,
+                },
+                {
+                    id: 9,
+                    name: "Cachaçarias e Engenhos de Pernambuco",
+                    status: "paused",
+                    created: "2023-11-11",
+                    rating: 4.3,
+                    views: 670,
+                },
+                {
+                    id: 10,
+                    name: "Carnaval de Olinda: Frevo e Ladeiras",
+                    status: "active",
+                    created: "2023-12-01",
+                    rating: 5.0,
+                    views: 3000,
+                },
+                {
+                    id: 11,
+                    name: "Museu Cais do Sertão",
+                    status: "active",
+                    created: "2024-01-05",
+                    rating: 4.7,
+                    views: 750,
+                },
+                {
+                    id: 12,
+                    name: "Capela Dourada e Convento de Santo Antônio",
+                    status: "pending",
+                    created: "2024-02-10",
+                    rating: 4.1,
+                    views: 280,
+                },
+                {
+                    id: 13,
+                    name: "Polo Gastronômico de Casa Forte",
+                    status: "draft",
+                    created: "2024-03-01",
+                    rating: 0,
+                    views: 60,
+                },
+                {
+                    id: 14,
+                    name: "Praia de Boa Viagem: Coqueiros e Piscinas Naturais",
+                    status: "active",
+                    created: "2024-04-15",
+                    rating: 4.9,
+                    views: 1800,
+                },
+                {
+                    id: 15,
+                    name: "Centro de Artesanato de Pernambuco",
+                    status: "active",
+                    created: "2024-05-01",
+                    rating: 4.5,
+                    views: 920,
+                },
+            ];
+
+            let filteredRoutes = [...allRoutes];
+            let currentPage = 1;
+            const rowsPerPage = 5;
+
+            // Hamburger menu toggle
+            hamburgerMenu.addEventListener("click", () => {
+                sidebar.classList.toggle("active");
+            });
+
+            // Close sidebar when clicking outside on mobile
+            document.addEventListener("click", (event) => {
+                if (
+                    window.innerWidth <= 768 &&
+                    sidebar.classList.contains("active") &&
+                    !sidebar.contains(event.target) &&
+                    !hamburgerMenu.contains(event.target)
+                ) {
+                    sidebar.classList.remove("active");
+                }
+            });
+
+            function getStatusBadge(status) {
+                let className = "";
+                let text = "";
+                switch (status) {
+                    case "active":
+                        className = "active";
+                        text = "Ativo";
+                        break;
+                    case "paused":
+                        className = "paused";
+                        text = "Pausado";
+                        break;
+                    case "draft":
+                        className = "draft";
+                        text = "Rascunho";
+                        break;
+                    case "pending":
+                        className = "pending";
+                        text = "Pendente";
+                        break;
+                    default:
+                        className = "draft";
+                        text = "Desconhecido";
+                }
+                return `<span class="status-badge ${className}">${text}</span>`;
+            }
+
+            function renderTable() {
+                const start = (currentPage - 1) * rowsPerPage;
+                const end = start + rowsPerPage;
+                const paginatedRoutes = filteredRoutes.slice(start, end);
+
+                routesTableBody.innerHTML = "";
+                if (paginatedRoutes.length === 0) {
+                    routesTableBody.innerHTML = `<tr><td colspan="6" style="text-align: center; padding: 20px;">Nenhuma rota encontrada.</td></tr>`;
+                    prevPageBtn.disabled = true;
+                    nextPageBtn.disabled = true;
+                    currentPageSpan.textContent = 0;
+                    totalPagesSpan.textContent = 0;
+                    return;
+                }
+
+                paginatedRoutes.forEach((route) => {
+                    const row = routesTableBody.insertRow();
+                    row.innerHTML = `
+              <td>${route.name}</td>
+              <td>${getStatusBadge(route.status)}</td>
+              <td>${route.created}</td>
+              <td>${route.rating > 0 ? route.rating.toFixed(1) : "N/A"}</td>
+              <td>${route.views}</td>
+              <td class="actions">
+                <button onclick="editRoute(${route.id})">Editar</button>
+                <button onclick="duplicateRoute(${route.id})">Duplicar</button>
+                <button class="delete" onclick="deleteRoute(${route.id})">Deletar</button>
+              </td>
+            `;
+                });
+
+                updatePaginationControls();
+            }
+
+            function updatePaginationControls() {
+                const totalPages = Math.ceil(filteredRoutes.length / rowsPerPage);
+                currentPageSpan.textContent = filteredRoutes.length === 0 ? 0 : currentPage;
+                totalPagesSpan.textContent = totalPages;
+
+                prevPageBtn.disabled = currentPage === 1;
+                nextPageBtn.disabled = currentPage === totalPages || filteredRoutes.length === 0;
+            }
+
+            function applyFilters() {
+                const searchTerm = searchRoutesInput.value.toLowerCase();
+                const statusFilter = filterStatusSelect.value;
+
+                filteredRoutes = allRoutes.filter((route) => {
+                    const matchesSearch = route.name.toLowerCase().includes(searchTerm);
+                    const matchesStatus =
+                        statusFilter === "all" || route.status === statusFilter;
+                    return matchesSearch && matchesStatus;
+                });
+
+                currentPage = 1; // Reset to first page after filtering
+                renderTable();
+            }
+
+            // Event Listeners for search and filter
+            searchRoutesInput.addEventListener("input", applyFilters);
+            filterStatusSelect.addEventListener("change", applyFilters);
+
+            // Pagination event listeners
+            prevPageBtn.addEventListener("click", () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    renderTable();
+                }
+            });
+
+            nextPageBtn.addEventListener("click", () => {
+                const totalPages = Math.ceil(filteredRoutes.length / rowsPerPage);
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    renderTable();
+                }
+            });
+
+            // Initial render
+            applyFilters(); // Call applyFilters to render initial table and set pagination
+
+            // Global functions for table actions (for simplicity, use alerts)
+            window.editRoute = (id) => {
+                alert(`Editar rota com ID: ${id}`);
+                // Implement navigation to edit page or modal
+            };
+
+            window.duplicateRoute = (id) => {
+                alert(`Duplicar rota com ID: ${id}`);
+                // Implement logic to create a copy of the route
+            };
+
+            window.deleteRoute = (id) => {
+                if (confirm(`Tem certeza que deseja deletar a rota com ID: ${id}?`)) {
+                    allRoutes = allRoutes.filter((route) => route.id !== id);
+                    applyFilters(); // Re-apply filters to update table and pagination
+                    alert(`Rota com ID ${id} deletada.`);
+                }
+            };
+        });
+    </script>
+</body>
+
+</html>

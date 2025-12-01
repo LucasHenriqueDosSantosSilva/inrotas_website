@@ -1,34 +1,35 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cupom de Desconto</title>
     <link
       rel="stylesheet"
       href="/src/style/usuario_premium/codigo_usuario.css"
     />
-    <title>Código de Usuário</title>
   </head>
-  <body>
-    <header>
-      <nav>
-        <img class="logo" src="/images/logo.png" alt="logo" />
 
-        <div class="nav-icons">
-          <img src="/images/profile.png" alt="profile_icon" />
-          <img src="/images/menu.png" alt="settings_icon" />
-        </div>
-      </nav>
+  <body>
+    <header class="top-bar">
+      <img src="logo.png" class="logo" alt="Logo" />
+
+      <div class="profile">
+        <img src="usuarioPhotoroom.png" class="icon-user" alt="User" />
+        <img src="menu.png" class="icon-menu" alt="Menu" />
+      </div>
     </header>
 
-    <main>
-      <section class="card">
-        <h1>Seu Codigo de Parceiro</h1>
-        <h2>
-          [INSERIR CODIGO GERADO]
-          <!-- inserir codigo gerado futuramente -->
-        </h2>
-      </section>
-    </main>
+    <div class="container">
+      <div class="card">
+        <div class="card-title">CUPOM 50%</div>
+
+        <div class="card-body">
+          <h2 class="code">A5067</h2>
+
+          <img src="qrcode.png" id="qrcode" alt="QR Code" />
+        </div>
+      </div>
+    </div>
   </body>
 </html>

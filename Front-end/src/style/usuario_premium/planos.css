@@ -1,0 +1,116 @@
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+  background: #ffffff;
+  text-align: center;
+  padding-bottom: 40px;
+}
+
+/* TOPO */
+.top-bar {
+  position: relative;
+  width: 100%;
+  height: 90px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.arrow {
+  position: absolute;
+  top: 15px;
+  font-size: 34px;
+  font-weight: 300;
+  color: #1fa64a;
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+.top-bar .arrow:first-child {
+  left: 25px;
+}
+
+/* seta direita */
+.top-bar .arrow:last-child {
+  right: 25px;
+}
+
+.logo {
+  height: 115px;
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.logo {
+  height: 110px;
+  display: block;
+  margin: 5px auto 10px auto;
+}
+
+/* TÍTULO */
+.title {
+  margin-top: 10px;
+  font-size: 22px;
+  font-weight: 700;
+  color: #215e3a;
+}
+
+/* CARDS */
+.plans {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  flex-wrap: wrap;
+}
+
+.card {
+  width: 240px;
+  height: 440px;
+  padding: 35px 20px;
+  border-radius: 18px;
+  background: linear-gradient(to bottom, #d9e8d9, #2b5f3c);
+  color: white;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.18);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card h3 {
+  font-size: 26px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.price {
+  font-size: 28px;
+  font-weight: bold;
+  line-height: 1.4em;
+  margin-bottom: 25px;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  background: #2f74d6;
+  color: white;
+  border: none;
+  border-radius: 9px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #1e56a1;
+}

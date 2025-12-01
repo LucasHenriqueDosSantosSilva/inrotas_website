@@ -1,0 +1,29 @@
+<div class="form-section">
+    <h3>📍 Localização da Rota em Pernambuco</h3>
+
+    <div class="input-group">
+        <label for="localizacao">Localização</label>
+        <input type="text" id="localizacao" placeholder="Clique no botão para selecionar" readonly />
+    </div>
+
+    <button type="button" class="btn-secondary" onclick="abrirMapaPE()">
+        🗺️ Abrir Mapa Interativo
+    </button>
+</div>
+
+<script>
+    function abrirMapaPE() {
+        window.open('mapa-interativo-pernambuco.html', 'mapa', 'width=1400,height=800');
+    }
+
+    // Carregar localização salva do mapa
+    const checkLocation = setInterval(() => {
+        const saved = localStorage.getItem('selectedPernambucoLocation');
+        if (saved) {
+            const data = JSON.parse(saved);
+            document.getElementById('localizacao').value =
+                `${data.endereco} - Raio: ${data.raio}m`;
+            clearInterval(checkLocation);
+        }
+    }, 500);
+</script>

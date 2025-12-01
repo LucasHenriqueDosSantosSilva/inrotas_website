@@ -1,0 +1,406 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #eef4ee;
+}
+
+/* HEADER */
+
+.header {
+    height: 70px;
+    background: #fafafa;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+}
+
+.logo {
+    height: 80px;
+}
+
+.user-menu {
+    display: flex;
+    align-items: center;
+}
+
+.user-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.menu-icon {
+    font-size: 26px;
+    margin-left: 10px;
+}
+
+/* ABAS */
+
+.tabs {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;  /* já centraliza horizontalmente */
+    padding: 40px 20px;       /* aumenta o espaço acima/abaixo */
+}
+
+/* Contêiner tipo “pílula” */
+.tabs-group {
+    background: #d0ddcf;
+    border-radius: 12px;
+    padding: 2px;
+    gap: 0;
+    box-shadow: 0 0 3px rgba(0,0,0,0.25);
+    max-width: 100%;
+    width: calc(100% - 50px);
+    margin-left: 20px;
+    margin-right: 0;
+}
+
+/* Cada aba ocupa 1/3 */
+.tab-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 10px;
+    border: none;
+    border-radius: 10px;
+    background: transparent;
+    font-size: 14px;
+    font-weight: 600;
+    color: #4a5a45;
+    cursor: pointer;
+    outline: none;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+/* Aba ativa em verde sólido */
+.tab-btn.active {
+    background: #16611e;
+    color: #ffffff;
+}
+
+/* Bordas internas finas entre abas inativas */
+.tab-btn:not(:last-child) {
+    border-right: 1px solid rgba(0,0,0,0.1);
+}
+
+/* Ícones */
+.tab-icon {
+    font-size: 16px;
+}
+
+/* Ícones inativos em tom mais claro */
+.tab-btn:not(.active) .tab-icon {
+    opacity: 0.5;
+}
+
+/* Aba ativa com ícone totalmente visível */
+.tab-btn.active .tab-icon {
+    opacity: 1;
+}
+
+/* CONTEÚDOS DAS ABAS */
+
+.tab-content {
+    display: none;
+    padding: 30px;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* CARD GERAL */
+
+.card {
+    background: #d9e5d6;
+    padding: 25px;
+    border-radius: 12px;
+    width: 80%;
+    margin: auto;
+    display: flex;
+    gap: 40px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.07);
+}
+
+.left,
+.right {
+    flex: 1;
+}
+
+/* FORMULÁRIOS */
+
+label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+input {
+    width: 100%;
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #bbb;
+    box-sizing: border-box;
+}
+
+.row {
+    display: flex;
+    gap: 50px;
+}
+
+/* BOTÕES DE AÇÃO */
+
+.pay-btn,
+.copy-btn,
+.pdf-btn {
+    width: 100%;
+    margin-top: 20px;
+    padding: 12px;
+    background: #2f7dff;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.resumo-compra {
+    background: #d9e5d6;          /* verde bem claro, como o da imagem */
+    padding: 20px;
+    border-radius: 10px;
+}
+
+/* Título "Compra:" em verde forte */
+.resumo-titulo {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #0b5f1f;
+    font-size: 22px;
+}
+
+/* Linha com descrição à esquerda e valor à direita */
+.resumo-topo {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+    margin-bottom: 16px;
+}
+
+.resumo-plano-nome {
+    margin: 0;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.resumo-proxima {
+    margin: 2px 0 0;
+    font-size: 13px;
+}
+
+/* Valor da compra no topo, alinhado à direita */
+.resumo-valor-numero {
+    font-weight: 600;
+    font-size: 14px;
+}
+
+/* Caixa branca do "Total" */
+.resumo-total-box {
+    background: #ffffff;
+    border-radius: 8px;
+    padding: 10px 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+}
+
+.resumo-total-label {
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.resumo-total-valor {
+    font-weight: 600;
+    font-size: 14px;
+}
+
+/* Botão azul ocupando toda a largura */
+.resumo-pay-btn {
+    width: 100%;
+    background: #2f7dff;
+    border-radius: 10px;
+    font-size: 14px;
+}
+
+/* PIX */
+
+/*.pix-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+} */
+
+/* Layout geral do cartão PIX */
+.pix-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 40px;
+}
+
+/* Coluna esquerda (texto + logo) */
+.pix-info {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Caixas brancas ao redor de "Sua compra" e da logo */
+
+.pix-box {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 20px 24px;       /* mais “respiro” interno */
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+
+    /* NOVO: transforma em container e centraliza conteúdo */
+    display: flex;
+    flex-direction: column;
+    align-items: center;      /* centraliza horizontalmente */
+    justify-content: center;  /* centraliza verticalmente */
+
+    min-width: 260px;         /* aumenta a largura mínima da caixa */
+    min-height: 120px;        /* aumenta a altura mínima */
+}
+
+/* Caixa de valor um pouco mais “robusta” visualmente */
+.valor-box h3 {
+    margin: 0 0 8px;
+    text-align: center;
+}
+
+.valor-box h1 {
+    margin: 0;
+    font-size: 30px;          /* pode subir um pouco o tamanho do valor */
+    text-align: center;
+}
+
+/* Caixa da logo continua centralizada */
+.logo-box img.pix-icon {
+    width: 140px;             /* se quiser, aumenta a logo junto */
+}
+/* Caixa de valor mais “forte” visualmente */
+.valor-box h3 {
+    margin: 0 0 6px;
+}
+
+.valor-box h1 {
+    margin: 0;
+    font-size: 28px;
+}
+
+/* Caixa da logo */
+.logo-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pix-icon {
+    width: 120px; /* pode ajustar um pouco para mais/menos */
+}
+
+/* Coluna central com QR Code – centralizada e maior */
+.pix-qr {
+    text-align: center;
+}
+
+.pix-qr h3 {
+    margin-bottom: 10px;
+}
+
+/* Aumenta e centraliza o QR Code */
+.qr-img {
+    width: 260px;      /* antes ~180px, aumente ou reduza conforme o gosto */
+    display: block;
+    margin: 0 auto 16px;
+}
+
+/* Coluna direita (chave) */
+.pix-key {
+    text-align: center;
+}
+
+.pix-key h3 {
+    margin-bottom: 6px;
+}
+
+/* Botões azuis já existentes continuam valendo */
+.copy-btn {
+    max-width: 260px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.pix-icon {
+    width: 130px;
+}
+
+.qr-img {
+    width: 180px;
+}
+
+/* BOLETO */
+
+.boleto-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;   /* centraliza tudo horizontalmente */
+    justify-content: center;
+    gap: 15px;             /* espaçamento entre os elementos */
+}
+
+/* faz o input não esticar demais */
+.boleto-card input {
+    width: 70%;            /* ajuste como quiser: 50%, 70%, etc */
+    max-width: 70%;
+    text-align: center;
+}
+
+
+.boleto-card .barcode-img {
+    width: 70%;   
+    max-width: 600px; /* limite opcional */
+}
+
+/* botão também centralizado */
+.boleto-card .pdf-btn {
+    width: 200px;          /* ou 100% se quiser ocupar tudo */
+}
+
+.barcode-img {
+    width: 70%;
+    margin: 20px;
+}
+
+/* RESPONSIVO BÁSICO */
+
+@media (max-width: 768px) {
+    .card {
+        flex-direction: column;
+        width: 95%;
+    }
+
+    .row {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
